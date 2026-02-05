@@ -67,66 +67,21 @@ The loop stops when:
 
 ## Installation
 
-### Option 1: From Marketplace (Recommended)
+Use Claude Code's built-in `/plugin` command for installation.
 
-Add this repository as a plugin marketplace in your project's `.claude/settings.json`:
+### Step 1: Add the Marketplace
 
-```json
-{
-  "pluginMarketplaces": [
-    "https://github.com/YOUR_USERNAME/claude-achieve-plugin"
-  ],
-  "plugins": [
-    "achieve"
-  ]
-}
+In Claude Code, run:
+
+```
+/plugin marketplace add todorkolev/claude-achieve-plugin
 ```
 
-Or for local development, reference the local path:
+### Step 2: Install the Plugin
 
-```json
-{
-  "pluginMarketplaces": [
-    "/path/to/claude-achieve-plugin"
-  ],
-  "plugins": [
-    "achieve"
-  ]
-}
+```
+/plugin install achieve@claude-achieve-plugin
 ```
 
-### Option 2: Direct Clone
+That's it! The plugin is now installed.
 
-Clone this repository into your Claude Code plugins directory:
-
-```bash
-git clone https://github.com/YOUR_USERNAME/claude-achieve-plugin.git ~/.claude/plugins/achieve
-```
-
-Then add as a plugin reference in your project's `.claude/settings.json`:
-
-```json
-{
-  "plugins": [
-    "~/.claude/plugins/achieve"
-  ]
-}
-```
-
-### Option 3: Git Submodule
-
-Add as a submodule in your project:
-
-```bash
-git submodule add https://github.com/YOUR_USERNAME/claude-achieve-plugin.git .claude-plugins/achieve
-```
-
-Then reference in `.claude/settings.json`:
-
-```json
-{
-  "plugins": [
-    "./.claude-plugins/achieve"
-  ]
-}
-```
