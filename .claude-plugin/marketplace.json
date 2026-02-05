@@ -1,0 +1,16 @@
+{
+  "name": "claude-achieve-plugin",
+  "owner": {
+    "name": "Local Development"
+  },
+  "repository": "https://github.com/todorkolev/claude-achieve-plugin",
+  "plugins": [
+    {
+      "name": "achieve",
+      "source": ".",
+      "version": "1.0.2",
+      "description": "Goal-driven iterative development with multi-session support. Achieve complex goals through buildforce phases with automatic iteration until success.",
+      "keywords": ["goals", "iteration", "automation", "buildforce", "multi-session"]
+    }
+  ]
+}
