@@ -14,7 +14,7 @@
       "author": {
         "name": "Todor Kolev"
       },
-      "source": ".",
+      "source": "./plugins/achieve",
       "category": "productivity"
     }
   ]
