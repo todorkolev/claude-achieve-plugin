@@ -1,6 +1,6 @@
 ---
 version: "1.0"
-description: "Achieve a goal using iterative development with Buildforce phases"
+description: "Achieve a goal using iterative development with automatic phases"
 argument-hint: "<goal description>"
 allowed-tools: ["Bash(*)", "Read(*)", "Write(*)", "Edit(*)", "Glob(*)", "Grep(*)", "Task(*)", "WebFetch(*)", "WebSearch(*)", "mcp__*"]
 ---
@@ -102,7 +102,7 @@ This marker enables parallel sessions in different terminal windows.
 
 After the session is created, immediately begin working on the goal.
 
-Read the protocol file and state file that were created, then start with Phase 1 (research) of the buildforce workflow.
+Read the protocol file and state file that were created, then start with the research phase.
 
 The stop hook will automatically continue the loop when you try to exit until either:
 1. You output `<promise>ACHIEVED</promise>` (only when truly complete)

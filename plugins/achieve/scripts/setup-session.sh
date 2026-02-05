@@ -153,6 +153,52 @@ Read and follow $PROTOCOL_PATH exactly.
 Goal state is in .claude/achieve-sessions/$SESSION_ID/state.yaml.
 EOF
 
+# Create research findings stub
+cat > "$SESSION_DIR/research.md" << 'EOF'
+# Research Findings
+
+## Relevant Files
+<!-- List files related to the goal -->
+
+## Existing Patterns
+<!-- Note patterns to follow -->
+
+## Dependencies
+<!-- What this goal depends on -->
+
+## Architecture Notes
+<!-- Key observations -->
+
+## TLDR
+<!-- Bullet summary -->
+EOF
+
+# Create spec stub
+cat > "$SESSION_DIR/spec.yaml" << EOF
+# Specification
+goal: "$GOAL"
+requirements:
+  functional: []
+  non_functional: []
+success_criteria:
+$SUCCESS_CRITERIA
+assumptions: []
+dependencies: []
+open_questions: []
+EOF
+
+# Create plan stub
+cat > "$SESSION_DIR/plan.yaml" << 'EOF'
+# Implementation Plan
+status: draft
+phases: []
+architecture_decisions: []
+files_to_modify: []
+files_to_create: []
+testing_approach: []
+deviations: []
+EOF
+
 # Output success message
 cat << EOF
 Achieve session created!
@@ -163,8 +209,11 @@ Max iterations: $MAX_ITERATIONS
 Completion promise: $COMPLETION_PROMISE
 
 Session files:
-  State: $SESSION_DIR/state.yaml
-  Loop:  $SESSION_DIR/loop.md
+  State:    $SESSION_DIR/state.yaml
+  Loop:     $SESSION_DIR/loop.md
+  Research: $SESSION_DIR/research.md
+  Spec:     $SESSION_DIR/spec.yaml
+  Plan:     $SESSION_DIR/plan.yaml
   Protocol: $PROTOCOL_PATH (shared)
 
 The stop hook is now active for this session.

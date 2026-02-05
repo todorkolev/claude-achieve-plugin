@@ -26,8 +26,10 @@ Sessions are stored in `.claude/achieve-sessions/`:
 ├── index.yaml              # Active session + list
 ├── abc123/
 │   ├── state.yaml          # Goal, criteria, attempts
-│   ├── loop.md             # Ralph-style loop state
-│   └── protocol.md         # Loop instructions
+│   ├── loop.md             # Loop state
+│   ├── research.md         # Research findings
+│   ├── spec.yaml           # Requirements spec
+│   └── plan.yaml           # Implementation plan
 └── def456/
     └── ...
 ```
@@ -54,10 +56,13 @@ claude
 
 Each terminal runs its own independent loop. Session tracking happens transparently via transcript markers - no environment variables needed.
 
-## Integration with Buildforce
+## Workflow Phases
 
-Uses buildforce phases for structured development:
-- Research → Plan → Build → Validate → Complete
+Structured development through automatic phases:
+- **Research**: Explore codebase, identify patterns and dependencies
+- **Plan**: Create spec.yaml and plan.yaml with requirements and tasks
+- **Build**: Implement with progress tracking and deviation logging
+- **Validate**: Test against success criteria, iterate until achieved
 
 ## Stop Criteria
 
@@ -84,4 +89,8 @@ In Claude Code, run:
 ```
 
 That's it! The plugin is now installed.
+
+## Acknowledgments
+
+The phase-based workflow (research, plan, build, validate) is inspired by [Buildforce CLI](https://github.com/berserkdisruptors/buildforce-cli).
 
