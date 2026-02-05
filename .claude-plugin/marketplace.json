@@ -14,7 +14,7 @@
       "author": {
         "name": "Todor Kolev"
       },
-      "source": "./.claude-plugin",
+      "source": ".",
       "category": "productivity"
     }
   ]
