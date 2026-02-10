@@ -14,7 +14,7 @@ SESSIONS_DIR=".claude/achieve-sessions"
 INDEX_FILE="$SESSIONS_DIR/index.yaml"
 
 # Get transcript path from hook input (needed for session detection)
-TRANSCRIPT_PATH=$(echo "$HOOK_INPUT" | jq -r '.transcript_path')
+TRANSCRIPT_PATH=$(echo "$HOOK_INPUT" | sed -n 's/.*"transcript_path" *: *"\([^"]*\)".*/\1/p')
 
 if [[ ! -f "$TRANSCRIPT_PATH" ]]; then
   # No transcript - allow exit
@@ -96,11 +96,15 @@ if [[ -z "$LAST_LINE" ]]; then
   exit 0
 fi
 
-LAST_OUTPUT=$(echo "$LAST_LINE" | jq -r '
-  .message.content |
-  map(select(.type == "text")) |
-  map(.text) |
-  join("\n")
+LAST_OUTPUT=$(echo "$LAST_LINE" | perl -e '
+  my $json = <STDIN>;
+  my @texts;
+  while ($json =~ /"type"\s*:\s*"text"\s*,\s*"text"\s*:\s*"((?:[^"\\]|\\.)*)"/g) {
+    my $t = $1;
+    $t =~ s/\\(["\\/bfnrt])/$1 eq "n" ? "\n" : $1 eq "t" ? "\t" : $1 eq "r" ? "\r" : $1 eq "b" ? "\b" : $1 eq "f" ? "\f" : $1/ge;
+    push @texts, $t;
+  }
+  print join("\n", @texts);
 ' 2>&1)
 
 if [[ $? -ne 0 ]] || [[ -z "$LAST_OUTPUT" ]]; then
@@ -146,13 +150,15 @@ else
 fi
 
 # Output JSON to block stop and feed prompt back
-jq -n \
-  --arg prompt "$PROMPT_TEXT" \
-  --arg msg "$SYSTEM_MSG" \
-  '{
-    "decision": "block",
-    "reason": $prompt,
-    "systemMessage": $msg
-  }'
+perl -e '
+  my ($prompt, $msg) = @ARGV;
+  for my $s (\$prompt, \$msg) {
+    $$s =~ s/([\\"])/\\$1/g;
+    $$s =~ s/\n/\\n/g;
+    $$s =~ s/\r/\\r/g;
+    $$s =~ s/\t/\\t/g;
+  }
+  printf "{\"decision\":\"block\",\"reason\":\"%s\",\"systemMessage\":\"%s\"}\n", $prompt, $msg;
+' -- "$PROMPT_TEXT" "$SYSTEM_MSG"
 
 exit 0
